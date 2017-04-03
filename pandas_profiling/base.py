@@ -284,7 +284,7 @@ def describe(df, bins=10, correlation_overrides=None, pool_size=multiprocessing.
     # pool = multiprocessing.Pool(pool_size)
     # local_multiprocess_func = partial(multiprocess_func, **kwargs)
     # make it sequential now
-    ldesc = {col: s for col, s in map(local_multiprocess_func, df.iteritems())}
+    ldesc = {col: s for col, s in map(multiprocess_func, df.iteritems())}
     pool.close()
 
     # Check correlations between variables
@@ -296,7 +296,6 @@ def describe(df, bins=10, correlation_overrides=None, pool_size=multiprocessing.
     for x, corr_x in corr.iterrows():
         if correlation_overrides and x in correlation_overrides:
             continue
-
         for y, corr in corr_x.iteritems():
             if x == y:
                 break
