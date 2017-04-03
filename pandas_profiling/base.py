@@ -154,8 +154,6 @@ def mini_histogram(series, **kwargs):
         plot.set_facecolor("w")
 
     xticks = plot.xaxis.get_major_ticks()
-    print (series)
-    print (xticks)
 
     for tick in xticks[1:-1]:
         tick.set_visible(False)
@@ -287,11 +285,10 @@ def describe(df, bins=10, correlation_overrides=None, pool_size=multiprocessing.
         df = df.reset_index()
 
     # Describe all variables in a univariate way
-    # pool = multiprocessing.Pool(pool_size)
-    # local_multiprocess_func = partial(multiprocess_func, **kwargs)
-    # make it sequential now
-    ldesc = {col: s for col, s in map(multiprocess_func, df.iteritems())}
-    # pool.close()
+    pool = multiprocessing.Pool(pool_size)
+    local_multiprocess_func = partial(multiprocess_func, **kwargs)
+    ldesc = {col: s for col, s in map(local_multiprocess_func, df.iteritems())}
+    pool.close()
 
     # Check correlations between variables
     ''' TODO: corr(x,y) > 0.9 and corr(y,z) > 0.9 does not imply corr(x,z) > 0.9
