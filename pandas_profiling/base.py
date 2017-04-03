@@ -154,11 +154,17 @@ def mini_histogram(series, **kwargs):
         plot.set_facecolor("w")
 
     xticks = plot.xaxis.get_major_ticks()
+    print (series)
+    print (xticks)
+
     for tick in xticks[1:-1]:
         tick.set_visible(False)
         tick.label.set_visible(False)
-    for tick in (xticks[0], xticks[-1]):
-        tick.label.set_fontsize(8)
+    try:
+        for tick in (xticks[0], xticks[-1]):
+            tick.label.set_fontsize(8)
+    except:
+        print ('error in setting ticks fontsize')
     plot.figure.subplots_adjust(left=0.15, right=0.85, top=1, bottom=0.35, wspace=0, hspace=0)
     plot.figure.savefig(imgdata)
     imgdata.seek(0)
