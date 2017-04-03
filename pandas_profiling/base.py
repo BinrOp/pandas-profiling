@@ -285,7 +285,7 @@ def describe(df, bins=10, correlation_overrides=None, pool_size=multiprocessing.
     # local_multiprocess_func = partial(multiprocess_func, **kwargs)
     # make it sequential now
     ldesc = {col: s for col, s in map(multiprocess_func, df.iteritems())}
-    pool.close()
+    # pool.close()
 
     # Check correlations between variables
     ''' TODO: corr(x,y) > 0.9 and corr(y,z) > 0.9 does not imply corr(x,z) > 0.9
